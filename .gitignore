@@ -1,0 +1,9 @@
+/.gradle/
+/build/
+/buildSrc/.gradle/
+/buildSrc/build/
+/lib/build/
+/example/build/
+/moon/build/
+/convertors/Gson/build/
+/convertors/KotlinxSerialization/build/
