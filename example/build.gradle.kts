@@ -16,6 +16,9 @@ dependencies {
 //    implementation("com.github.MrAdkhambek:moon:alpha-0.0.1")
 //    implementation("com.github.MrAdkhambek:moon-convertor-kotlin-serialization:alpha-0.0.1")
 
+    implementation(projects.moon)
+    implementation(projects.convertors.kotlinxSerialization)
+
     implementation(Deps.Kotlin.stdLib)
     implementation(Deps.KotlinX.coroutinesCore)
     implementation(Deps.KotlinX.serializationJson)
