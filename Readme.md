@@ -1,28 +1,46 @@
 # Moon
-## Alpha version
 
-This is library that look like [Scarlet](https://github.com/Tinder/Scarlet)
-Wrapper [Socket.io](https://socket.io)
+A Retrofit inspired [Socket.io](https://socket.io) client for Kotlin (Android, JVM). </br>
+For WebSocket [Scarlet](https://github.com/Tinder/Scarlet) </br>
+
+**This library works only on Kotlin and Kotlin coroutines**
+
+## Download
+
+```groovy
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("me.adkhambek.moon:moon:alpha-0.0.1")
+}
+```
+
+## Convertors
+
+```groovy
+dependencies {
+    implementation("me.adkhambek.moon:convertor-gson:alpha-0.0.1")                  // OPTIONAL
+    implementation("me.adkhambek.moon:convertor-kotlin-serialization:alpha-0.0.1")  // OPTIONAL
+}
+```
+
+## Usage
 
 ```kotlin
 interface SocketAPI {
 
-    @Event("single_event")
-    suspend fun singleEvent(): SomeClass
-
     @Event("single_event_with_body")
     suspend fun singleEventWithBody(body: SomeClass): SomeClass
 
-    @Event("event_with_body")
-    fun eventWithBody(body: SomeClass): Flow<SomeClass>
-
-    @Event("event")
+    @Event("event_as_listener")
     fun eventWithBody(): Flow<SomeClass>
 }
 ```
 
 ```kotlin
-val io : IO.socket = TODO()
+val io: IO.socket = TODO()
 val convertorAdapter = TODO()
 
 // Create moon object with Builder pattern
@@ -45,20 +63,24 @@ val socketAPI = moon.create(SocketAPI::class.java)
 class ViewModel(
     private val socketAPI: SocketAPI
 ) {
-    
-    val events : Flow<SomeClass> = socketAPI
+
+    val events: Flow<SomeClass> = socketAPI
         .eventWithBody()
-    
-    fun singleEvent() {
+
+    fun singleEvent(body: SomeClass) {
         viewModelScope.launch {
-            val eventResponse = socketAPI.singleEvent()
+            val eventResponse = socketAPI.singleEvent(body)
         }
     }
 }
 ```
 
+## TODO
 
-
+- [ ] Feature multiple convertor adapter
+- [ ] Convertor adapter for acknowledgement
+- [ ] Feature convert adapter for ByteArray
+- [ ] Feature FILE
 
 License
 =======

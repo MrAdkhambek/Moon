@@ -8,7 +8,7 @@ import java.lang.reflect.Proxy
 import java.util.concurrent.ConcurrentHashMap
 
 
-class Moon private constructor(
+public class Moon private constructor(
     private val socket: Socket,
     private val adapterFactory: EventConvertor.Factory,
 ) {

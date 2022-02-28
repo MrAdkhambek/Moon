@@ -25,6 +25,11 @@ object Deps {
         const val client = "io.socket:socket.io-client:2.0.1"
     }
 
+    object Publish {
+        const val mavenPublishPlugin = "com.vanniktech:gradle-maven-publish-plugin:0.13.0"
+        const val dokkaPlugin = "org.jetbrains.dokka:dokka-gradle-plugin:1.6.10"
+    }
+
     object Test {
         const val junitAPI = "org.junit.jupiter:junit-jupiter-api:5.6.0"
         const val junitEngine = "org.junit.jupiter:junit-jupiter-engine"

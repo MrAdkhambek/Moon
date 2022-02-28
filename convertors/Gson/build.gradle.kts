@@ -1,14 +1,14 @@
 plugins {
     kotlin("jvm")
     `java-library`
-    `maven-publish`
-}
 
-repositories {
-    mavenCentral()
+    id("com.vanniktech.maven.publish")
+    id("org.jetbrains.dokka")
 }
 
 dependencies {
+    dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.6.10")
+
     compileOnly(projects.moon)
 
     compileOnly(Deps.Kotlin.stdLib)
@@ -28,32 +28,28 @@ tasks.getByName<Test>("test") {
 }
 
 configure<JavaPluginExtension> {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
-}
-
-
-
-val sourcesJar by tasks.registering(Jar::class) {
-    archiveClassifier.set("sources")
-    from(sourceSets["main"].allSource)
 }
 
 publishing {
     publications {
-        create<MavenPublication>("maven") {
-            from(components["java"])
-            artifact(sourcesJar.get())
-
-            groupId = "com.github.MrAdkhambek"
-            artifactId = "moon-convertor-gson"
-            version = "alpha-0.0.1"
+        repositories {
+            maven {
+                val releasesUrl = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+                val snapshotsUrl = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+                url = if (version.toString().endsWith("SNAPSHOT")) snapshotsUrl else releasesUrl
+                credentials {
+                    username = project.properties["ossrhUsername"].toString()
+                    password = project.properties["ossrhPassword"].toString()
+                }
+            }
         }
     }
 }

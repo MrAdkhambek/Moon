@@ -9,20 +9,11 @@ import kotlinx.serialization.json.Json
 import me.adkhambek.moon.Event
 import me.adkhambek.moon.Moon
 import me.adkhambek.moon.convertor.EventConvertor
-import mr.adkhambek.moon.convertor.asConverterFactory
+import me.adkhambek.moon.convertor.asConverterFactory
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
-import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
-import req.Onboarding
 import java.util.concurrent.TimeUnit
-
-private fun buildRequest(request: Request, auth: String?): Request.Builder {
-    return request.newBuilder()
-        .header("Content-type", "application/json")
-        .header("Accept", "application/json")
-        .header("Authorization", requireNotNull(auth))
-}
 
 fun provideOkHttpClient(): OkHttpClient = with(OkHttpClient.Builder()) {
     readTimeout(10, TimeUnit.MINUTES)
@@ -31,20 +22,13 @@ fun provideOkHttpClient(): OkHttpClient = with(OkHttpClient.Builder()) {
 
     addInterceptor(HttpLoggingInterceptor(::println))
 
-//    addInterceptor { chain ->
-//        val request = chain.request();
-//        chain.proceed(
-//            buildRequest(
-//                request = request,
-//                auth = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJhbTE1NUB5b3BtYWlsLmNvbSIsImlhdCI6MTY0NDkwNDU2NH0.FDuZgocrWOsgDzVG0GmhuUzJELDzLcIytcGl-6vUVCY"
-//            ).build()
-//        )
-//    }
-
     build()
 }
 
-private val json = Json { encodeDefaults = true }
+private val json = Json {
+    prettyPrint = true
+    encodeDefaults = true
+}
 
 @ExperimentalSerializationApi
 private fun provideConverterFactory(): EventConvertor.Factory {
@@ -68,15 +52,8 @@ fun main() = runBlocking {
         transports = arrayOf("websocket", "polling")
     }
 
-    val socket: Socket = IO.socket("http://csa-rc.dev2.skylab.world", option)
+    val socket: Socket = IO.socket("http://192.168.0.100:3000", option)
     socket.connect()
-
-//    val moon = Moon
-//        .Builder()
-//        .with(socket)
-//        .convertor(provideConverterFactory())
-//        .build()
-
 
     socket.on(Socket.EVENT_CONNECT) {
         println(Socket.EVENT_CONNECT)
@@ -96,6 +73,10 @@ fun main() = runBlocking {
     val moon = Moon.Factory().create(socket, provideConverterFactory())
     val api: API = moon.create(API::class.java)
 
+    println(api.testEvent(Message("test event")))
+
+    println("=".repeat(40))
+
     api.helloEvent()
         .catch {
             println(it.toString())
@@ -103,12 +84,18 @@ fun main() = runBlocking {
         .collect {
             println(it)
         }
-
-    Unit
 }
 
 interface API {
 
-    @Event(value = "app.configuration.onboarding")
-    fun helloEvent(): Flow<Onboarding>
+    @Event(value = "ping")
+    fun helloEvent(): Flow<Message>
+
+    @Event(value = "test")
+    suspend fun testEvent(message: Message): List<Message>
 }
+
+@Serializable
+data class Message(
+    val message: String
+)
