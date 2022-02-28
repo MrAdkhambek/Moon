@@ -1,11 +1,13 @@
-# Moon
+Moon
+-------------
 
 A Retrofit inspired [Socket.io](https://socket.io) client for Kotlin (Android, JVM). </br>
 For WebSocket [Scarlet](https://github.com/Tinder/Scarlet) </br>
 
-**This library works only on Kotlin and Kotlin coroutines**
+> **⚠️   This library works only on Kotlin and Kotlin coroutines**
 
-## Download
+Download
+-------------
 
 ```groovy
 repositories {
@@ -17,7 +19,8 @@ dependencies {
 }
 ```
 
-## Convertors
+Convertors
+-------------
 
 ```groovy
 dependencies {
@@ -26,7 +29,8 @@ dependencies {
 }
 ```
 
-## Usage
+Usage
+-------------
 
 ```kotlin
 interface SocketAPI {
@@ -75,6 +79,16 @@ class ViewModel(
 }
 ```
 
+R8 / ProGuard
+-------------
+
+If you are using R8 the shrinking and obfuscation rules are included automatically.
+
+ProGuard users must manually add the options from
+[moon.pro][proguard file].
+
+
+
 ## TODO
 
 - [ ] Feature multiple convertor adapter
@@ -97,3 +111,7 @@ License
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
+
+[1]: https://search.maven.org/remote_content?g=me.adkhambek.moon&a=moon&v=LATEST
+[snap]: https://s01.oss.sonatype.org/content/repositories/snapshots/
+[proguard file]: https://github.com/MrAdkhambek/Moon/blob/main/moon/src/main/resources/META-INF/proguard/moon.pro
