@@ -1,3 +1,4 @@
+import io.socket.client.Ack
 import io.socket.client.IO
 import io.socket.client.Socket
 import kotlinx.coroutines.flow.Flow
@@ -10,9 +11,11 @@ import me.adkhambek.moon.Event
 import me.adkhambek.moon.Moon
 import me.adkhambek.moon.convertor.EventConvertor
 import me.adkhambek.moon.convertor.asConverterFactory
+import netscape.javascript.JSObject
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.json.JSONObject
 import java.util.concurrent.TimeUnit
 
 fun provideOkHttpClient(): OkHttpClient = with(OkHttpClient.Builder()) {
@@ -72,6 +75,14 @@ fun main() = runBlocking {
 
     val moon = Moon.Factory().create(socket, provideConverterFactory())
     val api: API = moon.create(API::class.java)
+
+    socket.emit("single_event_with_body", JSONObject("""
+        {
+            "some": "data"
+        }
+    """.trimIndent()), Ack { response ->
+
+    })
 
     println(api.testEvent(Message("test event")))
 

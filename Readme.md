@@ -3,8 +3,11 @@ Moon
 
 A Retrofit inspired [Socket.io](https://socket.io) client for Kotlin (Android, JVM). </br>
 For WebSocket [Scarlet](https://github.com/Tinder/Scarlet) </br>
-
 > **⚠️   This library works only on Kotlin and Kotlin coroutines**
+
+<p align="center">
+<img src="./media/vecteezy_illustration-of-electric-plug-cartoon-sitting-on-the-half-moon_.jpg" width="60%" alt="logo">
+</p>
 
 Download
 -------------
@@ -52,7 +55,7 @@ val moon = Moon
     .Builder()
     .with(io)
     .convertor(convertorAdapter)
-    .build(convertorAdapter)
+    .build()
 
 // Create moon object with Factory pattern
 val moon = Moon
