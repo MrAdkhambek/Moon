@@ -1,7 +1,6 @@
 package me.adkhambek.moon.method
 
 import me.adkhambek.moon.EventFactory
-import me.adkhambek.moon.method.ServiceMethod
 import me.adkhambek.moon.convertor.EventConvertor
 import me.adkhambek.moon.flowResponse
 

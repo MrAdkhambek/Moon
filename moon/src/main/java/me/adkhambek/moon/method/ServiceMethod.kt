@@ -11,7 +11,7 @@ import java.lang.reflect.Type
 import kotlin.coroutines.Continuation
 
 
-abstract class ServiceMethod<T>(
+internal abstract class ServiceMethod<T>(
     private val eventFactory: EventFactory
 ) {
 

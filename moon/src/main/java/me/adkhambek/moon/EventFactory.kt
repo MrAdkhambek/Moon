@@ -7,7 +7,7 @@ import java.lang.reflect.Method
 import java.lang.reflect.Type
 
 
-class EventFactory @JvmOverloads constructor(
+internal class EventFactory @JvmOverloads constructor(
     val socketIO: Socket,
     val method: Method,
     val returnType: Type,

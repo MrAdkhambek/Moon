@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package me.adkhambek.moon.internal
+package me.adkhambek.moon
 
 import java.lang.annotation.ElementType
 import javax.annotation.Nonnull
@@ -27,4 +27,4 @@ import javax.annotation.meta.TypeQualifierDefault
 @MustBeDocumented
 @TypeQualifierDefault(ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER)
 @Retention(AnnotationRetention.RUNTIME)
-internal annotation class EverythingIsNonNull
+annotation class EverythingIsNonNull
