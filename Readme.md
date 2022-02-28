@@ -52,7 +52,7 @@ val moon = Moon
     .Builder()
     .with(io)
     .convertor(convertorAdapter)
-    .build(convertorAdapter)
+    .build()
 
 // Create moon object with Factory pattern
 val moon = Moon
