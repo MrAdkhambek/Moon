@@ -8,3 +8,4 @@
 /convertors/Gson/build/
 /convertors/KotlinxSerialization/build/
 /local.properties
+/IO.Socket echo/node_modules
