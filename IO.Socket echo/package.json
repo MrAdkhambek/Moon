@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Mr. Adkhambek",
+  "license": "Apache License, Version 2.0",
   "dependencies": {
     "express": "^4.17.2",
     "nodemon": "^2.0.15",

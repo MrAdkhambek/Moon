@@ -2,7 +2,7 @@ const http = require('http')
 const app = require('express')()
 const server = http.createServer(app)
 
-const { Server } = require("socket.io")
+const {Server} = require("socket.io")
 const io = new Server(server)
 
 io.sockets.on('connection', function (socket) {
@@ -23,8 +23,8 @@ io.sockets.on('connection', function (socket) {
     console.log("Someone just connected!")
 
     // Echo back messages from the client
-    socket.on('test', (arg, ack) => {
-        console.log("Got message: " + arg)
+    socket.on('testAck', (arg, ack) => {
+        console.table(arg)
         ack([
             {
                 'message': 'pong'
@@ -33,6 +33,11 @@ io.sockets.on('connection', function (socket) {
                 'message': 'pong'
             }
         ])
+    })
+
+    // Echo back messages from the client
+    socket.on('test', (arg) => {
+        console.table(arg)
     })
 })
 

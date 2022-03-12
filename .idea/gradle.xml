@@ -15,7 +15,6 @@
             <option value="$PROJECT_DIR$/convertors" />
             <option value="$PROJECT_DIR$/convertors/Gson" />
             <option value="$PROJECT_DIR$/convertors/KotlinxSerialization" />
-            <option value="$PROJECT_DIR$/example" />
             <option value="$PROJECT_DIR$/moon" />
           </set>
         </option>

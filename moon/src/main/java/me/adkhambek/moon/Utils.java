@@ -39,7 +39,7 @@ final public class Utils {
     }
 
     @SuppressWarnings("AnnotateFormatMethod")
-    static RuntimeException methodError(
+    public static RuntimeException methodError(
             Method method, @Nullable Throwable cause, String message, Object... args) {
         message = String.format(message, args);
         return new IllegalArgumentException(
