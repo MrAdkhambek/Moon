@@ -4,7 +4,6 @@ Moon
 A Retrofit inspired [Socket.io](https://socket.io) client for Kotlin (Android, JVM). </br>
 For WebSocket [Scarlet](https://github.com/Tinder/Scarlet) </br>
 
-
 > **⚠️   This library works only on Kotlin and Kotlin coroutines**
 
 <p align="center">
@@ -20,7 +19,7 @@ repositories {
 }
 
 dependencies {
-    implementation("me.adkhambek.moon:moon:0.0.2-alpha")
+    implementation("me.adkhambek.moon:moon:0.0.4-alpha") 
 }
 ```
 
@@ -29,8 +28,8 @@ Convertors
 
 ```groovy
 dependencies {
-    implementation("me.adkhambek.moon:convertor-gson:alpha-0.0.2-alpha")            // OPTIONAL
-    implementation("me.adkhambek.moon:convertor-kotlin-serialization:0.0.2-alpha")  // OPTIONAL
+    implementation("me.adkhambek.moon:convertor-gson:alpha-0.0.4-alpha")            // OPTIONAL
+    implementation("me.adkhambek.moon:convertor-kotlin-serialization:0.0.4-alpha")  // OPTIONAL
 }
 ```
 

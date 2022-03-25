@@ -76,6 +76,7 @@ internal fun flowResponse(
     val listener = Emitter.Listener { arrayOfAny ->
         arrayOfAny.forEachIndexed { index, any ->
             try {
+                logger.log(event, String.format("ARG - arg[%d] = %s", index, any.toString()))
                 val arg: Any = requireNotNull(responseConvertor(any.toString()))
                 logger.log(event, String.format("RESPONSE - arg[%d] = %s", index, arg))
                 require(trySend(arg).isSuccess)
