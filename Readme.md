@@ -1,5 +1,6 @@
 Moon
 -------------
+[![Maven Central](https://img.shields.io/maven-central/v/me.adkhambek.moon/moon.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22me.adkhambek.moon%22)
 
 A Retrofit inspired [Socket.io](https://socket.io) client for Kotlin (Android, JVM). </br>
 For WebSocket [Scarlet](https://github.com/Tinder/Scarlet) </br>
@@ -19,7 +20,7 @@ repositories {
 }
 
 dependencies {
-    implementation("me.adkhambek.moon:moon:0.0.4-alpha") 
+    implementation("me.adkhambek.moon:moon:${latest_version}") 
 }
 ```
 
@@ -28,8 +29,8 @@ Convertors
 
 ```groovy
 dependencies {
-    implementation("me.adkhambek.moon:convertor-gson:alpha-0.0.4-alpha")            // OPTIONAL
-    implementation("me.adkhambek.moon:convertor-kotlin-serialization:0.0.4-alpha")  // OPTIONAL
+    implementation("me.adkhambek.moon:convertor-gson:${latest_version}")                    // OPTIONAL
+    implementation("me.adkhambek.moon:convertor-kotlin-serialization:${latest_version}")    // OPTIONAL
 }
 ```
 
