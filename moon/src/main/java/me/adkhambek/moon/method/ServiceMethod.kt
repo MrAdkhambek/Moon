@@ -10,13 +10,12 @@ import java.lang.reflect.Method
 import java.lang.reflect.Type
 import kotlin.coroutines.Continuation
 
-
 internal abstract class ServiceMethod<T>(
     protected val moon: Moon,
     protected val methodConfigs: MethodConfigs
 ) {
 
-    public abstract fun invoke(args: Array<Any>): T
+    abstract fun invoke(args: Array<Any>): T
 
     protected fun <ResponseT> createResponseConverter(
         responseType: Type,
@@ -47,7 +46,7 @@ internal abstract class ServiceMethod<T>(
 
         @JvmStatic
         @Suppress("UNCHECKED_CAST")
-        public fun <T> parseAnnotations(
+        fun <T> parseAnnotations(
             moon: Moon,
             method: Method,
         ): ServiceMethod<T> {

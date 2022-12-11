@@ -36,3 +36,11 @@
 # is used.
 -keep,allowobfuscation,allowshrinking class kotlin.coroutines.Continuation
 -keep,allowobfuscation,allowshrinking class kotlinx.coroutines.flow.Flow
+
+# Remove all Logger methods
+# unused parts of third-party libraries.
+-assumenosideeffects class me.adkhambek.moon.Logger {
+    void log(...);
+    void e(...);
+    void apply(...);
+}

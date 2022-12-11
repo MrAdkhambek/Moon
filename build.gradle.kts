@@ -1,31 +1,29 @@
-buildscript {
-    extra["kotlinVersion"] = Deps.Kotlin.version
-    val kotlinVersion: String by extra
+@file:Suppress(
+    "DSL_SCOPE_VIOLATION",
+    "UnstableApiUsage"
+)
 
-    repositories {
-        google()
-        mavenCentral()
-    }
+import io.gitlab.arturbosch.detekt.Detekt
 
-    dependencies {
-        classpath(kotlin("gradle-plugin", version = kotlinVersion))
-        classpath(kotlin("serialization", version = kotlinVersion))
+plugins {
+    // Kotlin plugins
+    alias(libs.plugins.kotlin.ksp) apply false
+    alias(libs.plugins.kotlin.jvm) apply false
+    alias(libs.plugins.kotlin.kapt) apply false
 
-        classpath(Deps.Publish.dokkaPlugin)
-        classpath(Deps.Publish.mavenPublishPlugin)
-    }
+    alias(libs.plugins.ktlint)
+    alias(libs.plugins.detekt)
+
+    alias(libs.plugins.dokka) apply false
+    alias(libs.plugins.publish)
 }
 
-allprojects {
-    repositories {
-        mavenCentral()
-    }
-
-    group = "me.adkhambek.moon"
-    version = "alpha-0.0.1"
+detekt {
+    parallel = true
+    buildUponDefaultConfig = true
+    config = files("config/detekt/detekt.yml")
 }
 
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
+tasks.withType<Detekt>().configureEach {
+    reports.html.required.set(true)
 }
-

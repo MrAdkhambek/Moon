@@ -8,10 +8,10 @@ For WebSocket [Scarlet](https://github.com/Tinder/Scarlet) </br>
 > **⚠️   This library works only on Kotlin and Kotlin coroutines**
 
 <p align="center">
-<img src="./media/vecteezy_illustration-of-electric-plug-cartoon-sitting-on-the-half-moon_.jpg" width="60%" alt="logo">
+<img src="./media/socket-moon.jpg" width="60%" alt="logo">
 </p>
 
-Download
+Dependencies
 -------------
 
 ```groovy
@@ -20,6 +20,7 @@ repositories {
 }
 
 dependencies {
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines_version}") // REQUIRED
     implementation("me.adkhambek.moon:moon:${latest_version}") 
 }
 ```
@@ -30,7 +31,9 @@ Convertors
 ```groovy
 dependencies {
     implementation("me.adkhambek.moon:convertor-gson:${latest_version}")                    // OPTIONAL
+    
     implementation("me.adkhambek.moon:convertor-kotlin-serialization:${latest_version}")    // OPTIONAL
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${json_version}")      // REQUIRED if you use convertor-kotlin-serialization
 }
 ```
 
@@ -122,13 +125,12 @@ val moon = Moon
 
 // Create moon object with Factory pattern
 val moon = Moon.Factory().create(socket, logger, convertor)
+moon.connect() // or socket.connect()
 
 // Create API Interface object
-val api: API = moon.create(API::class.java)
-
-
-
 val socketAPI = moon.create(SocketAPI::class.java)
+// or shorter version
+val socketAPI: SocketAPI = moon.create()
 ```
 
 ```kotlin
@@ -143,6 +145,18 @@ class ViewModel(
             val eventResponse = socketAPI.singleEvent(body)
         }
     }
+}
+```
+
+```kotlin
+class ViewModel(
+    private val moon: Moon,
+) {
+    /**
+     * For listen socket state
+     * @see <a href="https://github.com/MrAdkhambek/Moon/blob/1a6678c93d25630eb97b4e6c63fcaf1d990ec71b/moon/src/main/java/me/adkhambek/moon/Moon.kt#L193">Moon.Status</a>
+     */
+    val state: StateFlow<Moon.Status> get() = moon.state 
 }
 ```
 

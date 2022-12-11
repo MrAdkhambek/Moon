@@ -9,3 +9,7 @@
 /convertors/KotlinxSerialization/build/
 /local.properties
 /IO.Socket echo/node_modules
+/build-logic/.gradle/
+/build-logic/build/
+/build-logic/convention/build/
+/.idea/

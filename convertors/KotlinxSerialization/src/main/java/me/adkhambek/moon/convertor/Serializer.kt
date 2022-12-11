@@ -1,19 +1,25 @@
 package me.adkhambek.moon.convertor
 
-import kotlinx.serialization.*
+import kotlinx.serialization.BinaryFormat
+import kotlinx.serialization.DeserializationStrategy
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.SerialFormat
+import kotlinx.serialization.SerializationStrategy
+import kotlinx.serialization.StringFormat
+import kotlinx.serialization.serializer
 import okhttp3.MediaType
 import java.lang.reflect.Type
 
-
 @ExperimentalSerializationApi
-sealed class Serializer<R : Any> {
+internal sealed class Serializer<R : Any> {
 
     abstract fun <T> fromEvent(loader: DeserializationStrategy<T>, body: R): T
     abstract fun <T> toEvent(contentType: MediaType, saver: SerializationStrategy<T>, value: T): R
 
     protected abstract val format: SerialFormat
 
-    fun serializer(type: Type): KSerializer<Any> = format.serializersModule.serializer(type)
+    operator fun invoke(type: Type): KSerializer<Any> = format.serializersModule.serializer(type)
 
     class FromString(override val format: StringFormat) : Serializer<String>() {
 

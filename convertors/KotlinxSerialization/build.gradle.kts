@@ -1,40 +1,24 @@
+@file:Suppress(
+    "DSL_SCOPE_VIOLATION",
+    "UnstableApiUsage"
+)
+import java.io.FileInputStream
+import java.io.InputStreamReader
+import java.util.Properties
+
 plugins {
-    kotlin("jvm")
-    kotlin("plugin.serialization")
-    `java-library`
-    id("com.vanniktech.maven.publish")
-    id("org.jetbrains.dokka")
+    id("me.adkhambek.kotlin")
+    alias(libs.plugins.dokka)
+    alias(libs.plugins.publish)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 dependencies {
-    dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.6.10")
+    dokkaHtmlPlugin(libs.dokka.java)
+    compileOnly(libs.kotlin.stdlib)
 
     compileOnly(projects.moon)
-
-    compileOnly(Deps.Kotlin.stdLib)
-    compileOnly(Deps.KotlinX.coroutinesCore)
-    compileOnly(Deps.KotlinX.serializationJson)
-
-    compileOnly(Deps.Squareup.okhttp3)
-    compileOnly(Deps.Squareup.logging)
-
-    testImplementation(Deps.Test.junitAPI)
-    testRuntimeOnly(Deps.Test.junitEngine)
-}
-
-tasks.getByName<Test>("test") {
-    useJUnitPlatform()
-}
-
-configure<JavaPluginExtension> {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-}
-
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
-    }
+    compileOnly(libs.kotlin.serialization.json)
 }
 
 publishing {
@@ -45,10 +29,22 @@ publishing {
                 val snapshotsUrl = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
                 url = if (version.toString().endsWith("SNAPSHOT")) snapshotsUrl else releasesUrl
                 credentials {
-                    username = project.properties["ossrhUsername"].toString()
-                    password = project.properties["ossrhPassword"].toString()
+                    username = getLocalProperty("mavenCentralUsername").toString()
+                    password = getLocalProperty("mavenCentralPassword").toString()
                 }
             }
         }
     }
+}
+
+fun Project.getLocalProperty(key: String, file: String = "local.properties"): Any {
+    val properties = Properties()
+    val localProperties = File(file)
+    if (localProperties.isFile) {
+        InputStreamReader(FileInputStream(localProperties), Charsets.UTF_8).use { reader ->
+            properties.load(reader)
+        }
+    } else error("File from not found")
+
+    return properties.getProperty(key)
 }

@@ -10,9 +10,9 @@ import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 import kotlin.coroutines.Continuation
 
-
 internal abstract class SocketMethods(
-    moon: Moon, methodConfigs: MethodConfigs,
+    moon: Moon,
+    methodConfigs: MethodConfigs,
 ) : ServiceMethod<Any>(moon, methodConfigs) {
 
     override fun invoke(args: Array<Any>): Any {
@@ -54,7 +54,7 @@ internal abstract class SocketMethods(
     }
 
     @Throws(Exception::class)
-    public abstract fun emit(
+    abstract fun emit(
         socket: Socket,
         event: String,
         args: Array<Any>,
@@ -62,7 +62,7 @@ internal abstract class SocketMethods(
         logger: Logger,
     ): Any
 
-    public abstract fun listen(
+    abstract fun listen(
         socket: Socket,
         event: String,
         returnType: Type,

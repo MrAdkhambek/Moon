@@ -1,0 +1,60 @@
+[versions]
+
+junit4 = "4.13.2"
+junit5 = "5.9.1"
+robolectric = "4.9"
+androidDesugarJdkLibs = "1.2.2"
+
+detektPlugin = "1.20.0"
+ktlintPlugin = "11.0.0"
+
+kotlinVersion = "1.7.0"
+kotlin-ksp = "1.7.0-1.0.6"
+kotlinCoroutinesVersion = "1.6.4"
+
+[plugins]
+publish = { id = "com.vanniktech.maven.publish", version = "0.22.0" }
+
+dokka = { id = "org.jetbrains.dokka", version.ref = "kotlinVersion" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinVersion" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinVersion" }
+
+kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "kotlin-ksp" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlinVersion" }
+
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detektPlugin" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintPlugin" }
+
+[libraries]
+kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlinVersion" }
+android-desugarJdkLibs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "androidDesugarJdkLibs" }
+
+socket-io = { group = "io.socket", name = "socket.io-client", version = "2.0.1" }
+
+squareup-okhttp-bom = { group = "com.squareup.okhttp3", name = "okhttp-bom", version = "4.10.0" }
+squareup-okhttp-okhttp = { group = "com.squareup.okhttp3", name = "okhttp" }
+squareup-okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor" }
+squareup-okhttp-mockwebserver = { group = "com.squareup.okhttp3", name = "mockwebserver" }
+
+# Kotlin
+kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version.ref = "kotlinVersion" }
+dokka-java = { group = "org.jetbrains.dokka", name = "kotlin-as-java-plugin", version.ref = "kotlinVersion" }
+kotlin-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version = "1.3.2" }
+kotlin-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinCoroutinesVersion" }
+
+google-findbugs-jsr305 = { group = "com.google.code.findbugs", name = "jsr305", version = "3.0.2" }
+google-gson = { group = "com.google.code.gson", name = "gson", version = "2.10" }
+
+# Test
+jupiter-api = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit5" }
+jupiter = { group = "org.junit.jupiter", name = "junit-jupiter" }
+
+[bundles]
+kotlin = [
+    "kotlin-stdlib",
+]
+
+test-unit = [
+    "jupiter",
+    "jupiter-api",
+]

@@ -1,5 +1,11 @@
 package me.adkhambek.moon.method;
 
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
+
 import io.socket.client.Socket;
 import kotlin.Unit;
 import kotlin.coroutines.Continuation;
@@ -8,11 +14,6 @@ import me.adkhambek.moon.Logger;
 import me.adkhambek.moon.MethodConfigs;
 import me.adkhambek.moon.Moon;
 import me.adkhambek.moon.convertor.EventConvertor;
-import org.jetbrains.annotations.NotNull;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.lang.reflect.Type;
 
 public class CoroutinesMethods extends SocketMethods {
 
@@ -44,22 +45,20 @@ public class CoroutinesMethods extends SocketMethods {
             logger.log(event, String.format("REQUEST - arg[%d] = %s", i, arg));
         }
 
-        if (returnType == Unit.class)
-            return emitWithoutResponse(
-                    socket,
-                    event,
-                    eventArguments,
-                    logger,
-                    continuation
-            );
-        else
-            return emitWithResponse(socket,
-                    event,
-                    eventArguments,
-                    logger,
-                    returnType,
-                    continuation
-            );
+        if (returnType == Unit.class) return emitWithoutResponse(
+                socket,
+                event,
+                eventArguments,
+                logger,
+                continuation
+        );
+        else return emitWithResponse(socket,
+                event,
+                eventArguments,
+                logger,
+                returnType,
+                continuation
+        );
     }
 
     @NotNull

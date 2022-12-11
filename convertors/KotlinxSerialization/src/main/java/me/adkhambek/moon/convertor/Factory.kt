@@ -9,15 +9,18 @@ import me.adkhambek.moon.Moon
 import okhttp3.MediaType
 import java.lang.reflect.Type
 
-
 @ExperimentalSerializationApi
 internal class Factory(
     private val contentType: MediaType,
     private val serializer: Serializer<String>
 ) : EventConvertor.Factory {
 
-    override fun fromEvent(type: Type, annotations: Array<Annotation>, moon: Moon): EventConvertor<String, *>? {
-        val loader: KSerializer<Any> = serializer.serializer(type)
+    override fun fromEvent(
+        type: Type,
+        annotations: Array<Annotation>,
+        moon: Moon,
+    ): EventConvertor<String, *> {
+        val loader: KSerializer<Any> = serializer(type)
         return DeserializationStrategyConverter(loader, serializer)
     }
 
@@ -26,14 +29,14 @@ internal class Factory(
         parameterAnnotations: Array<Annotation>,
         methodAnnotations: Array<Annotation>,
         moon: Moon
-    ): EventConvertor<Any, String>? {
-        val saver = serializer.serializer(type)
+    ): EventConvertor<Any, String> {
+        val saver = serializer(type)
         return SerializationStrategyConverter(contentType, saver, serializer)
     }
 }
 
 @ExperimentalSerializationApi
 @JvmName("create")
-fun StringFormat.asConverterFactory(contentType: MediaType): EventConvertor.Factory {
+public fun StringFormat.asConverterFactory(contentType: MediaType): EventConvertor.Factory {
     return Factory(contentType, Serializer.FromString(this))
 }

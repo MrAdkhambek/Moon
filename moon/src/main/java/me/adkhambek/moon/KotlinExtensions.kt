@@ -21,7 +21,6 @@ import kotlin.coroutines.intrinsics.suspendCoroutineUninterceptedOrReturn
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
-
 @Nonnull
 internal suspend fun emitWithoutResponse(
     socket: Socket,
@@ -32,7 +31,7 @@ internal suspend fun emitWithoutResponse(
     return suspendCancellableCoroutine { continuation ->
         socket.emit(event, *args)
         continuation.resume(Unit)
-        logger.log(event, "REQUEST - send event without result")
+        logger.log(event, REQUEST_WITHOUT_RESULT)
     }
 }
 
@@ -48,7 +47,7 @@ internal suspend fun <T> emitWithResponse(
         val listener = Ack { arrayOfAny ->
             try {
                 val firstArg = arrayOfAny.first().toString()
-                logger.log(event, String.format("RESPONSE - arg[0] = %s", firstArg))
+                logger.log(event, RESPONSE_RESULT.format(0, firstArg))
                 val result: T = responseConvertor(firstArg) as T
                 continuation.resume(result)
             } catch (t: Throwable) {
@@ -59,11 +58,10 @@ internal suspend fun <T> emitWithResponse(
         val emitter = socket.emit(event, args, listener)
         continuation.invokeOnCancellation {
             emitter.off()
-            logger.log(event, "off")
+            logger.log(event, OFF)
         }
     }
 }
-
 
 @Nonnull
 internal fun flowResponse(
@@ -76,9 +74,9 @@ internal fun flowResponse(
     val listener = Emitter.Listener { arrayOfAny ->
         arrayOfAny.forEachIndexed { index, any ->
             try {
-                logger.log(event, String.format("ARG - arg[%d] = %s", index, any.toString()))
+                logger.log(event, ARGUMENT_RESULT.format(index, any.toString()))
                 val arg: Any = requireNotNull(responseConvertor(any.toString()))
-                logger.log(event, String.format("RESPONSE - arg[%d] = %s", index, arg))
+                logger.log(event, RESPONSE_RESULT.format(index, arg.toString()))
                 require(trySend(arg).isSuccess)
             } catch (t: Throwable) {
                 logger.e(event, t)
@@ -86,10 +84,10 @@ internal fun flowResponse(
         }
     }
 
-    logger.log(event, "on")
+    logger.log(event, ON)
     val emitter = socket.on(event, listener)
     awaitClose {
-        logger.log(event, "off")
+        logger.log(event, OFF)
         emitter.off(event, listener)
     }
 }
@@ -107,7 +105,7 @@ internal suspend fun Exception.suspendAndThrow(): Nothing {
 internal fun getStackTraceString(t: Throwable): String {
     // Don't replace this with Log.getStackTraceString() - it hides
     // UnknownHostException, which is not what we want.
-    val sw = StringWriter(256)
+    val sw = StringWriter(STRING_WRITER_BUFFER_SIZE)
     val pw = PrintWriter(sw, false)
     t.printStackTrace(pw)
     pw.flush()

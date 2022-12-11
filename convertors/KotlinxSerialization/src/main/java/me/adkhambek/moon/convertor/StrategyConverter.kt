@@ -5,7 +5,6 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerializationStrategy
 import okhttp3.MediaType
 
-
 @ExperimentalSerializationApi
 internal class DeserializationStrategyConverter<T>(
     private val loader: DeserializationStrategy<T>,

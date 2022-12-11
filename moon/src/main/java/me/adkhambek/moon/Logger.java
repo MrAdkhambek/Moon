@@ -2,7 +2,7 @@ package me.adkhambek.moon;
 
 
 public interface Logger {
-    static final String INFO_FORMAT = "%s - %s";
+    String INFO_FORMAT = "%s - %s";
 
     default void log(String event, String message) {
         apply(String.format(INFO_FORMAT, event, message));

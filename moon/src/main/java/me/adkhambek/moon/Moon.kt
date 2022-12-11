@@ -3,6 +3,10 @@
 package me.adkhambek.moon
 
 import io.socket.client.Socket
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import me.adkhambek.moon.convertor.EventConvertor
 import me.adkhambek.moon.method.ServiceMethod
 import java.lang.reflect.Method
@@ -10,30 +14,39 @@ import java.lang.reflect.Proxy
 import java.lang.reflect.Type
 import java.util.concurrent.ConcurrentHashMap
 
-
 public class Moon private constructor(
     internal val socket: Socket,
     internal val logger: Logger,
     internal val converterFactories: List<EventConvertor.Factory>,
 ) {
 
+    private val _state: MutableStateFlow<Status> = MutableStateFlow(Status.DISCONNECT)
+    public val state: StateFlow<Status> get() = _state.asStateFlow()
+
     init {
         socket.on(Socket.EVENT_CONNECT) { args ->
+            _state.update { Status.CONNECTED }
             logger.log(Socket.EVENT_CONNECT, args.joinToString(separator = " | ", transform = Any::toString))
         }
 
         socket.on(Socket.EVENT_DISCONNECT) { args ->
+            _state.update { Status.DISCONNECT }
             logger.log(Socket.EVENT_DISCONNECT, args.joinToString(separator = " | ", transform = Any::toString))
         }
 
         socket.on(Socket.EVENT_CONNECT_ERROR) { args ->
+            _state.update { Status.EVENT_CONNECT_ERROR }
             logger.log(Socket.EVENT_CONNECT_ERROR, args.joinToString(separator = " | ", transform = Any::toString))
         }
     }
 
+    // ///////////////////////////////////////////////////////////////////////////////////////////
+    //  service creator methods
+    // ///////////////////////////////////////////////////////////////////////////////////////////
+
     private val serviceMethodCache: MutableMap<Method, ServiceMethod<Any>> = ConcurrentHashMap()
 
-    public inline fun <reified T> create() = create(T::class.java)
+    public inline fun <reified T> create(): T = create(T::class.java)
 
     public fun <T> create(clazz: Class<T>): T {
         val proxy = Proxy.newProxyInstance(
@@ -67,6 +80,10 @@ public class Moon private constructor(
 
         return requireNotNull(result)
     }
+
+    // ///////////////////////////////////////////////////////////////////////////////////////////
+    //  Convertor methods
+    // ///////////////////////////////////////////////////////////////////////////////////////////
 
     public fun <T> requestBodyConverter(
         type: Type,
@@ -117,7 +134,6 @@ public class Moon private constructor(
         throw IllegalArgumentException(builder.toString())
     }
 
-
     public fun <T> responseBodyConverter(
         type: Type,
         annotations: Array<Annotation>,
@@ -162,6 +178,27 @@ public class Moon private constructor(
         throw IllegalArgumentException(builder.toString())
     }
 
+    // ///////////////////////////////////////////////////////////////////////////////////////////
+    //  socket connect/disconnect methods
+    // ///////////////////////////////////////////////////////////////////////////////////////////
+
+    public fun connect() {
+        socket.connect()
+    }
+
+    public fun disconnect() {
+        socket.disconnect()
+    }
+
+    public enum class Status {
+        CONNECTED,
+        DISCONNECT,
+        EVENT_CONNECT_ERROR;
+    }
+
+    // ///////////////////////////////////////////////////////////////////////////////////////////
+    //  Moon creator classes
+    // ///////////////////////////////////////////////////////////////////////////////////////////
 
     public class Builder {
         private var socket: Socket? = null
@@ -185,8 +222,8 @@ public class Moon private constructor(
 
         public fun build(): Moon {
             val socket = requireNotNull(this.socket) { "Socket must not be null" }
-            val logger = requireNotNull(this.logger) { "Logger must not be null" }
-            require(this.converterFactories.isNotEmpty()) { "Convertor Factories must not be empty" }
+            val converterFactories = this.converterFactories
+            val logger = this.logger ?: Logger { }
 
             return Moon(
                 socket = socket, logger = logger, converterFactories = converterFactories
@@ -195,9 +232,12 @@ public class Moon private constructor(
     }
 
     public class Factory {
-        public fun create(socket: Socket, logger: Logger, vararg converterFactories: EventConvertor.Factory): Moon =
-            Moon(
-                socket = socket, logger = logger, converterFactories = converterFactories.toList()
-            )
+        public fun create(
+            socket: Socket,
+            logger: Logger,
+            vararg converterFactories: EventConvertor.Factory,
+        ): Moon = Moon(
+            socket = socket, logger = logger, converterFactories = converterFactories.toList()
+        )
     }
 }

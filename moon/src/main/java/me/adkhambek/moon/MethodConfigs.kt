@@ -5,7 +5,6 @@ package me.adkhambek.moon
 import java.lang.reflect.Method
 import java.lang.reflect.Type
 
-
 internal class MethodConfigs @JvmOverloads constructor(
     val method: Method,
     val returnType: Type,
@@ -15,14 +14,12 @@ internal class MethodConfigs @JvmOverloads constructor(
 ) {
 
     fun getSocketEvent(): String {
-        val annotation = method
-            .annotations
-            .firstOrNull { it is Event }
-            ?: throw Utils.methodError(
-                method,
-                "Method must at least one Event annotation"
-            )
+        val annotation = methodAnnotations
+            .asSequence()
+            .filterIsInstance<Event>()
+            .firstOrNull()
+            ?: throw Utils.methodError(method, NEED_EVENT_ANNOTATION)
 
-        return (annotation as Event).value
+        return annotation.value
     }
 }

@@ -1,7 +1,9 @@
 import io.socket.client.IO
 import io.socket.client.Socket
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
@@ -17,11 +19,10 @@ import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.TimeUnit
 import kotlin.system.exitProcess
 
-
-fun provideOkHttpClient(): OkHttpClient = with(OkHttpClient.Builder()) {
-    readTimeout(10, TimeUnit.MINUTES)
-    writeTimeout(10, TimeUnit.MINUTES)
-    connectTimeout(40, TimeUnit.SECONDS)
+public fun provideOkHttpClient(): OkHttpClient = with(OkHttpClient.Builder()) {
+    readTimeout(1, TimeUnit.SECONDS)
+    writeTimeout(1, TimeUnit.SECONDS)
+    connectTimeout(1, TimeUnit.SECONDS)
 
     addInterceptor(HttpLoggingInterceptor(::println))
     build()
@@ -39,9 +40,7 @@ private fun provideConverterFactory(): EventConvertor.Factory {
 //    return GsonAdapterFactory()
 }
 
-
-@ExperimentalSerializationApi
-fun main() = runBlocking {
+private fun provideSocket(): Socket {
     val client = provideOkHttpClient()
 
     val option = IO.Options().apply {
@@ -50,30 +49,37 @@ fun main() = runBlocking {
         transports = arrayOf("websocket", "polling")
     }
 
-    val socket: Socket = IO.socket("http://localhost:3000", option)
-    socket.connect()
+    return IO.socket("http://localhost:3000", option)
+}
 
-    val logger = Logger(::println)
+@ExperimentalSerializationApi
+public fun main(): Unit = runBlocking {
 
-    val moon = Moon.Factory().create(socket, logger, provideConverterFactory())
+    val logger = Logger {}
+
+    val moon = Moon.Factory().create(provideSocket(), logger, provideConverterFactory())
     val api: API = moon.create(API::class.java)
 
+    launch {
+        val state: StateFlow<Moon.Status> = moon.state
+    }
 
-    println(api.testEvent(Message("ping request")))
+    moon.connect()
+
+    api.testEvent(Message("ping request"))
     println(api.testAckEvent(Message("ping request")))
 
-    api
-        .helloEvent()
+    api.helloEvent()
         .take(4)
         .collect {
             println(it)
         }
 
+    moon.disconnect()
     exitProcess(0)
-    Unit
 }
 
-interface API {
+public interface API {
 
     /**
      * This is an example to show backend side
@@ -89,7 +95,7 @@ interface API {
      *  @see <a href="https://github.com/MrAdkhambek/Moon/blob/main/IO.Socket%20echo/app.js">Github</a>
      */
     @Event(value = "ping")
-    fun helloEvent(): Flow<Message>
+    public fun helloEvent(): Flow<Message>
 
     /**
      * This is an example to show backend side
@@ -105,7 +111,7 @@ interface API {
      *  @see <a href="https://github.com/MrAdkhambek/Moon/blob/main/IO.Socket%20echo/app.js">Github</a>
      */
     @Event(value = "test")
-    suspend fun testEvent(message: Message)
+    public suspend fun testEvent(message: Message)
 
     /**
      * This is an example to show backend side
@@ -130,10 +136,10 @@ interface API {
      *  @see <a href="https://github.com/MrAdkhambek/Moon/blob/main/IO.Socket%20echo/app.js">Github</a>
      */
     @Event(value = "testAck")
-    suspend fun testAckEvent(message: Message): List<Message>
+    public suspend fun testAckEvent(message: Message): List<Message>
 }
 
 @Serializable
-data class Message(
+public data class Message(
     val message: String
 )

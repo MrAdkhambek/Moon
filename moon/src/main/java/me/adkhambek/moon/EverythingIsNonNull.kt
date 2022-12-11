@@ -27,4 +27,4 @@ import javax.annotation.meta.TypeQualifierDefault
 @MustBeDocumented
 @TypeQualifierDefault(ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class EverythingIsNonNull
+public annotation class EverythingIsNonNull
