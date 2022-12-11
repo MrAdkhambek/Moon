@@ -154,7 +154,7 @@ class ViewModel(
 ) {
     /**
      * For listen socket state
-     * @see <a href="https://github.com/MrAdkhambek/Moon/blob/1a6678c93d25630eb97b4e6c63fcaf1d990ec71b/moon/src/main/java/me/adkhambek/moon/Moon.kt#L193">Moon.Status</a>
+     * @see <a href="https://github.com/MrAdkhambek/Moon/blob/f5dd034d25efcb5c066fa29ff4b7ca3d037890cf/moon/src/main/java/me/adkhambek/moon/Moon.kt#L193">Moon.Status</a>
      */
     val state: StateFlow<Moon.Status> get() = moon.state 
 }

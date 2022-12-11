@@ -2,6 +2,7 @@
     "DSL_SCOPE_VIOLATION",
     "UnstableApiUsage"
 )
+
 import java.io.FileInputStream
 import java.io.InputStreamReader
 import java.util.Properties
@@ -21,23 +22,7 @@ dependencies {
 
     api(libs.socket.io)
     compileOnly(libs.google.findbugs.jsr305)
-//
-//    compileOnly(Deps.Squareup.okhttp3)
-//    compileOnly(Deps.Squareup.logging)
-//
-//    api(Deps.SocketIO.client)
-// //    {
-// //        exclude(group = "org.json", module = "json")
-// //    }
-//
-//    testImplementation(Deps.Test.junitAPI)
-//    testRuntimeOnly(Deps.Test.junitEngine)
 }
-
-// tasks.getByName<Test>("test") {
-//    useJUnitPlatform()
-// }
-//
 
 publishing {
     publications {
