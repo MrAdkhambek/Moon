@@ -30,9 +30,10 @@ Convertors
 
 ```groovy
 dependencies {
-    implementation("me.adkhambek.moon:convertor-gson:${latest_version}")                    // OPTIONAL
+    implementation("me.adkhambek.moon:convertor-gson:${latest_version}")
+    implementation("com.google.code.gson:gson:${gson_version}")                             // REQUIRED if you use convertor-gson
     
-    implementation("me.adkhambek.moon:convertor-kotlin-serialization:${latest_version}")    // OPTIONAL
+    implementation("me.adkhambek.moon:convertor-kotlin-serialization:${latest_version}")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${json_version}")      // REQUIRED if you use convertor-kotlin-serialization
 }
 ```

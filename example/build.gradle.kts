@@ -10,6 +10,9 @@ plugins {
 
 dependencies {
     implementation(projects.moon)
+    implementation(projects.convertors.gson)
+    implementation(libs.google.gson)
+
     implementation(projects.convertors.kotlinxSerialization)
 
     implementation(libs.kotlin.stdlib)

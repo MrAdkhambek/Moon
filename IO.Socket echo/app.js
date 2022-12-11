@@ -2,7 +2,7 @@ const http = require('http')
 const app = require('express')()
 const server = http.createServer(app)
 
-const {Server} = require("socket.io")
+const { Server } = require("socket.io")
 const io = new Server(server)
 
 io.sockets.on('connection', function (socket) {
@@ -27,10 +27,10 @@ io.sockets.on('connection', function (socket) {
         console.table(arg)
         ack([
             {
-                'message': 'pong'
+                'message': 'pong 1'
             },
             {
-                'message': 'pong'
+                'message': 'pong 2'
             }
         ])
     })
