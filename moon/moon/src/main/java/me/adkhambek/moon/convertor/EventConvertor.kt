@@ -1,6 +1,6 @@
 package me.adkhambek.moon.convertor
 
-import me.adkhambek.moon.Moon
+import me.adkhambek.moon.provider.BodyConverterProvider
 import java.lang.reflect.Type
 
 public fun interface EventConvertor<T, R> {
@@ -12,14 +12,14 @@ public fun interface EventConvertor<T, R> {
         public fun fromEvent(
             type: Type,
             annotations: Array<Annotation>,
-            moon: Moon,
+            converterProvider: BodyConverterProvider,
         ): EventConvertor<String, *>?
 
         public fun toEvent(
             type: Type,
             parameterAnnotations: Array<Annotation>,
             methodAnnotations: Array<Annotation>,
-            moon: Moon,
+            converterProvider: BodyConverterProvider,
         ): EventConvertor<Any, String>?
     }
 }

@@ -10,14 +10,12 @@ plugins {
     id("me.adkhambek.kotlin")
     alias(libs.plugins.dokka)
     alias(libs.plugins.publish)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 dependencies {
     dokkaHtmlPlugin(libs.dokka.java)
-    compileOnly(libs.kotlin.stdlib)
-
-    compileOnly(projects.moon.moon)
-    compileOnly(libs.google.gson)
+    api(projects.moon.moon)
 }
 
 publishing {

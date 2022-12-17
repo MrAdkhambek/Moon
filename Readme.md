@@ -21,7 +21,11 @@ repositories {
 
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines_version}") // REQUIRED
-    implementation("me.adkhambek.moon:moon:${latest_version}") 
+    
+    implementation("me.adkhambek.moon:moon:${latest_version}")
+    
+    // or KTX version for more extensions
+    implementation("me.adkhambek.moon:moon-ktx:${latest_version}") 
 }
 ```
 
@@ -116,14 +120,6 @@ val logger: Logger = TODO()
 val socket: io.socket.client.Socket = TODO()
 val convertor: EventConvertor.Factory = TODO()
 
-// Create moon object with Builder pattern
-val moon = Moon
-    .Builder()
-    .with(socket)
-    .logger(logger)
-    .addConvertor(convertor)
-    .build()
-
 // Create moon object with Factory pattern
 val moon = Moon.Factory().create(socket, logger, convertor)
 moon.connect() // or socket.connect()
@@ -161,6 +157,37 @@ class ViewModel(
 }
 ```
 
+## Extensions
+```kotlin
+public fun Moon.Companion.factory(): Moon.Factory
+
+public fun Moon.Factory.create(
+    uri: String,
+    logger: Logger,
+    vararg converterFactories: EventConvertor.Factory,
+): Moon
+
+public fun Moon.Factory.create(
+    uri: String,
+    opts: Options,
+    logger: Logger,
+    vararg converterFactories: EventConvertor.Factory,
+): Moon
+
+public fun Moon.Factory.create(
+    uri: URI,
+    logger: Logger,
+    vararg converterFactories: EventConvertor.Factory,
+): Moon
+
+public fun Moon.Factory.create(
+    uri: URI,
+    opts: Options,
+    logger: Logger,
+    vararg converterFactories: EventConvertor.Factory,
+): Moon
+```
+
 R8 / ProGuard
 -------------
 
@@ -174,6 +201,7 @@ ProGuard users must manually add the options from
 ## TODO
 
 - [x] Feature multiple convertor adapter
+- [ ] Convertor adapter for acknowledgement
 - [ ] Convertor adapter for acknowledgement
 - [ ] Feature convert adapter for ByteArray
 - [ ] Feature FILE

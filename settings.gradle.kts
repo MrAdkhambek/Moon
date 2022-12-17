@@ -24,9 +24,12 @@ dependencyResolutionManagement {
 rootProject.name = "MoonLib"
 
 include(
-    "example",
-    "moon",
+    ":example",
+    ":moon:moon",
 
-    "convertors:KotlinxSerialization",
-    "convertors:Gson"
+    "moon:ktx",
+    ":moon:throwable",
+
+    ":convertors:KotlinxSerialization",
+    ":convertors:Gson"
 )

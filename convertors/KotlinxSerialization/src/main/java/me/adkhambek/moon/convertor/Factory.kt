@@ -5,7 +5,7 @@ package me.adkhambek.moon.convertor
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.StringFormat
-import me.adkhambek.moon.Moon
+import me.adkhambek.moon.provider.BodyConverterProvider
 import okhttp3.MediaType
 import java.lang.reflect.Type
 
@@ -18,7 +18,7 @@ internal class Factory(
     override fun fromEvent(
         type: Type,
         annotations: Array<Annotation>,
-        moon: Moon,
+        converterProvider: BodyConverterProvider,
     ): EventConvertor<String, *> {
         val loader: KSerializer<Any> = serializer(type)
         return DeserializationStrategyConverter(loader, serializer)
@@ -28,7 +28,7 @@ internal class Factory(
         type: Type,
         parameterAnnotations: Array<Annotation>,
         methodAnnotations: Array<Annotation>,
-        moon: Moon
+        converterProvider: BodyConverterProvider,
     ): EventConvertor<Any, String> {
         val saver = serializer(type)
         return SerializationStrategyConverter(contentType, saver, serializer)

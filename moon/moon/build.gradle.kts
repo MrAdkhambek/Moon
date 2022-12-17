@@ -2,22 +2,27 @@
     "DSL_SCOPE_VIOLATION",
     "UnstableApiUsage"
 )
+
 import java.io.FileInputStream
 import java.io.InputStreamReader
 import java.util.Properties
 
+
 plugins {
     id("me.adkhambek.kotlin")
+    alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.dokka)
     alias(libs.plugins.publish)
 }
 
 dependencies {
     dokkaHtmlPlugin(libs.dokka.java)
-    compileOnly(libs.kotlin.stdlib)
 
-    compileOnly(projects.moon.moon)
-    compileOnly(libs.google.gson)
+    compileOnly(libs.kotlin.stdlib)
+    compileOnly(libs.kotlin.coroutines.core)
+
+    api(libs.socket.io)
+    compileOnly(libs.google.findbugs.jsr305)
 }
 
 publishing {

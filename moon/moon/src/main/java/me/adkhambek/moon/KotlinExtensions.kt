@@ -12,6 +12,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.suspendCancellableCoroutine
 import me.adkhambek.moon.convertor.EventConvertor
+import me.adkhambek.moon.internal.*
+import me.adkhambek.moon.internal.ARGUMENT_RESULT
+import me.adkhambek.moon.internal.OFF
+import me.adkhambek.moon.internal.ON
+import me.adkhambek.moon.internal.REQUEST_WITHOUT_RESULT
+import me.adkhambek.moon.internal.RESPONSE_RESULT
+import me.adkhambek.moon.internal.STRING_WRITER_BUFFER_SIZE
+import me.adkhambek.moon.internal.ThrowX.check
 import java.io.PrintWriter
 import java.io.StringWriter
 import javax.annotation.Nonnull
@@ -28,6 +36,7 @@ internal suspend fun emitWithoutResponse(
     logger: Logger,
     vararg args: Any
 ) {
+    check(socket, event)
     return suspendCancellableCoroutine { continuation ->
         socket.emit(event, *args)
         continuation.resume(Unit)
@@ -43,6 +52,7 @@ internal suspend fun <T> emitWithResponse(
     responseConvertor: EventConvertor<String, *>,
     args: Array<Any>
 ): T {
+    check(socket, event)
     return suspendCancellableCoroutine { continuation ->
         val listener = Ack { arrayOfAny ->
             try {

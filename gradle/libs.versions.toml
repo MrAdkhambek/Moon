@@ -9,6 +9,7 @@ detektPlugin = "1.20.0"
 ktlintPlugin = "11.0.0"
 
 kotlinVersion = "1.7.0"
+daggerVersion = "2.44.2"
 kotlin-ksp = "1.7.0-1.0.6"
 kotlinCoroutinesVersion = "1.6.4"
 
@@ -44,6 +45,9 @@ kotlin-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coro
 
 google-findbugs-jsr305 = { group = "com.google.code.findbugs", name = "jsr305", version = "3.0.2" }
 google-gson = { group = "com.google.code.gson", name = "gson", version = "2.10" }
+
+dagger-dagger = { group = "com.google.dagger", name = "dagger", version.ref = "daggerVersion" }
+dagger-compiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "daggerVersion" }
 
 # Test
 jupiter-api = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit5" }

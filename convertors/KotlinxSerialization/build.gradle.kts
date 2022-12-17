@@ -17,7 +17,7 @@ dependencies {
     dokkaHtmlPlugin(libs.dokka.java)
     compileOnly(libs.kotlin.stdlib)
 
-    compileOnly(projects.moon)
+    compileOnly(projects.moon.moon)
     compileOnly(libs.kotlin.serialization.json)
 }
 

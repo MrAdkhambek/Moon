@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.TypeAdapter
 import com.google.gson.reflect.TypeToken
 import me.adkhambek.moon.Moon
+import me.adkhambek.moon.provider.BodyConverterProvider
 import java.lang.reflect.Type
 
 @Suppress("NOTHING_TO_INLINE")
@@ -20,7 +21,7 @@ public class GsonAdapterFactory constructor(
     override fun fromEvent(
         type: Type,
         annotations: Array<Annotation>,
-        moon: Moon,
+        converterProvider: BodyConverterProvider,
     ): EventConvertor<String, *> {
         val adapter = gson.getAdapter(TypeToken.get(type))
         return DeserializationStrategyConverter(adapter)
@@ -31,7 +32,7 @@ public class GsonAdapterFactory constructor(
         type: Type,
         parameterAnnotations: Array<Annotation>,
         methodAnnotations: Array<Annotation>,
-        moon: Moon
+        converterProvider: BodyConverterProvider,
     ): EventConvertor<Any, String> {
         val adapter: TypeAdapter<out Any> = gson.getAdapter(TypeToken.get(type))
         return SerializationStrategyConverter(adapter as TypeAdapter<Any>)

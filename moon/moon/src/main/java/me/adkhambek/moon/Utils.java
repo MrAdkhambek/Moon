@@ -56,8 +56,7 @@ final public class Utils {
                 cause);
     }
 
-    static RuntimeException parameterError(
-            Method method, Throwable cause, int p, String message, Object... args) {
+    public static RuntimeException parameterError(Method method, Throwable cause, int p, String message, Object... args) {
         return methodError(method, cause, message + " (parameter #" + (p + 1) + ")", args);
     }
 
@@ -105,7 +104,7 @@ final public class Utils {
     /**
      * Returns true if {@code a} and {@code b} are equal.
      */
-    static boolean equals(Type a, Type b) {
+    public static boolean equals(Type a, Type b) {
         if (a == b) {
             return true; // Also handles (a == null && b == null).
 

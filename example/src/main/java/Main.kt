@@ -1,16 +1,12 @@
 import io.socket.client.IO
 import io.socket.client.Socket
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.take
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import me.adkhambek.moon.Event
-import me.adkhambek.moon.Logger
-import me.adkhambek.moon.Moon
+import me.adkhambek.moon.*
 import me.adkhambek.moon.convertor.EventConvertor
 import me.adkhambek.moon.convertor.asConverterFactory
 import okhttp3.MediaType.Companion.toMediaType
@@ -46,7 +42,7 @@ private fun provideSocket(): Socket {
     val option = IO.Options().apply {
         this.callFactory = client
         this.webSocketFactory = client
-        transports = arrayOf("websocket", "polling")
+        transports = arrayOf("polling")
     }
 
     return IO.socket("http://localhost:3000", option)
@@ -57,23 +53,17 @@ public fun main(): Unit = runBlocking {
 
     val logger = Logger {}
 
-    val moon = Moon.Factory().create(provideSocket(), logger, provideConverterFactory())
+    val moon = Moon.factory().create("http://localhost:3000", logger, provideConverterFactory())
     val api: API = moon.create(API::class.java)
-
-    launch {
-        val state: StateFlow<Moon.Status> = moon.state
-    }
 
     moon.connect()
 
-    api.testEvent(Message("ping request"))
-    println(api.testAckEvent(Message("ping request")))
-
-    api.helloEvent()
-        .take(4)
-        .collect {
-            println(it)
-        }
+    try {
+        api.testEvent(Message("ping request"))
+        println(api.testAckEvent(Message("ping request")))
+    } catch (e: Exception) {
+        println(e)
+    }
 
     moon.disconnect()
     exitProcess(0)

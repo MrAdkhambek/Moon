@@ -1,26 +1,24 @@
 @file:Suppress(
-    "DSL_SCOPE_VIOLATION",
-    "UnstableApiUsage"
+        "DSL_SCOPE_VIOLATION",
+        "UnstableApiUsage"
 )
-
 import java.io.FileInputStream
 import java.io.InputStreamReader
 import java.util.Properties
-
 
 plugins {
     id("me.adkhambek.kotlin")
     alias(libs.plugins.dokka)
     alias(libs.plugins.publish)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 dependencies {
     dokkaHtmlPlugin(libs.dokka.java)
+    compileOnly(projects.moon.moon)
 
     compileOnly(libs.kotlin.stdlib)
     compileOnly(libs.kotlin.coroutines.core)
-
-    api(libs.socket.io)
     compileOnly(libs.google.findbugs.jsr305)
 }
 

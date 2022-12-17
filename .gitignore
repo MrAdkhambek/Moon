@@ -1,15 +1,17 @@
 /.gradle/
-/build/
 /buildSrc/.gradle/
-/buildSrc/build/
-/lib/build/
-/example/build/
-/moon/build/
-/convertors/Gson/build/
-/convertors/KotlinxSerialization/build/
 /local.properties
 /IO.Socket echo/node_modules
 /build-logic/.gradle/
-/build-logic/build/
-/build-logic/convention/build/
 /.idea/
+
+/convertors/KotlinxSerialization/build/
+/build-logic/convention/build/
+/convertors/Gson/build/
+/moon/throwable/build/
+/build-logic/build/
+/moon/moon/build/
+/buildSrc/build/
+/moon/ktx/build/
+/example/build/
+/build/
