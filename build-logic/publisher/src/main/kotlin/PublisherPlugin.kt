@@ -12,7 +12,7 @@ import org.gradle.kotlin.dsl.getByType
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStreamReader
-import java.util.Properties
+import java.util.*
 
 private const val SNAPSHOT = "SNAPSHOT"
 private const val USER_NAME = "mavenCentralUsername"
