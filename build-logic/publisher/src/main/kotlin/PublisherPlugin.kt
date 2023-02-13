@@ -29,19 +29,19 @@ class PublisherPlugin : Plugin<Project> {
                 apply("org.jetbrains.dokka")
             }
 
-            extensions.configure<PublishingExtension> {
-                publications {
-                    repositories {
-                        maven {
-                            url = if (version.toString().endsWith(SNAPSHOT)) uri(URL_SNAPSHOT) else uri(URL_STAGING)
-                            credentials {
-                                username = getLocalProperty(USER_NAME).toString()
-                                password = getLocalProperty(USER_PASS).toString()
-                            }
-                        }
-                    }
-                }
-            }
+//            extensions.configure<PublishingExtension> {
+//                publications {
+//                    repositories {
+//                        maven {
+//                            url = if (version.toString().endsWith(SNAPSHOT)) uri(URL_SNAPSHOT) else uri(URL_STAGING)
+//                            credentials {
+//                                username = getLocalProperty(USER_NAME).toString()
+//                                password = getLocalProperty(USER_PASS).toString()
+//                            }
+//                        }
+//                    }
+//                }
+//            }
 
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
             dependencies {
