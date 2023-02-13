@@ -50,7 +50,7 @@ class PublisherPlugin : Plugin<Project> {
         }
     }
 
-    private fun Project.getLocalProperty(key: String, file: String = "local.properties"): Any {
+    private fun Project.getLocalProperty(key: String, file: String = "gradle.properties"): Any {
         val properties = Properties()
         val localProperties = File(rootDir, file)
 
