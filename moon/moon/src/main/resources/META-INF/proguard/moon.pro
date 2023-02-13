@@ -39,7 +39,7 @@
 
 # Remove all Logger methods
 # unused parts of third-party libraries.
--assumenosideeffects class me.adkhambek.moon.Logger {
+-assumenosideeffects class com.adkhambek.moon.Logger {
     void log(...);
     void e(...);
     void apply(...);

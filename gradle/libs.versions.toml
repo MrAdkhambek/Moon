@@ -13,8 +13,10 @@ daggerVersion = "2.44.2"
 kotlin-ksp = "1.7.0-1.0.6"
 kotlinCoroutinesVersion = "1.6.4"
 
+maven-publish = "0.22.0"
+
 [plugins]
-publish = { id = "com.vanniktech.maven.publish", version = "0.22.0" }
+publish = { id = "com.vanniktech.maven.publish", version.ref = "maven-publish" }
 
 dokka = { id = "org.jetbrains.dokka", version.ref = "kotlinVersion" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinVersion" }
@@ -28,6 +30,7 @@ ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintPlugin" }
 
 [libraries]
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlinVersion" }
+publish-gradlePlugin = { group = "com.vanniktech", name = "gradle-maven-publish-plugin", version.ref = "maven-publish" }
 android-desugarJdkLibs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "androidDesugarJdkLibs" }
 
 socket-io = { group = "io.socket", name = "socket.io-client", version = "2.0.1" }

@@ -4,9 +4,11 @@
 /IO.Socket echo/node_modules
 /build-logic/.gradle/
 /.idea/
+/example/src/main/.DS_Store
 
 /convertors/KotlinxSerialization/build/
 /build-logic/convention/build/
+/build-logic/publisher/build/
 /convertors/Gson/build/
 /moon/throwable/build/
 /build-logic/build/

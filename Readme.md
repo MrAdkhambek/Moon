@@ -1,6 +1,6 @@
 Moon
 -------------
-[![Maven Central](https://img.shields.io/maven-central/v/me.adkhambek.moon/moon.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22me.adkhambek.moon%22)
+[![Maven Central](https://img.shields.io/maven-central/v/com.adkhambek.moon/moon.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%com.adkhambek.moon%22)
 
 A Retrofit inspired [Socket.io](https://socket.io) client for Kotlin (Android, JVM). </br>
 For WebSocket [Scarlet](https://github.com/Tinder/Scarlet) </br>
@@ -22,10 +22,10 @@ repositories {
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines_version}") // REQUIRED
     
-    implementation("me.adkhambek.moon:moon:${latest_version}")
+    implementation("com.adkhambek.moon:moon:${latest_version}")
     
     // or KTX version for more extensions
-    implementation("me.adkhambek.moon:moon-ktx:${latest_version}") 
+    implementation("com.adkhambek.moon:moon-ktx:${latest_version}") 
 }
 ```
 
@@ -34,10 +34,10 @@ Convertors
 
 ```groovy
 dependencies {
-    implementation("me.adkhambek.moon:convertor-gson:${latest_version}")
+    implementation("com.adkhambek.moon:convertor-gson:${latest_version}")
     implementation("com.google.code.gson:gson:${gson_version}")                             // REQUIRED if you use convertor-gson
     
-    implementation("me.adkhambek.moon:convertor-kotlin-serialization:${latest_version}")
+    implementation("com.adkhambek.moon:convertor-kotlin-serialization:${latest_version}")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${json_version}")      // REQUIRED if you use convertor-kotlin-serialization
 }
 ```
@@ -55,6 +55,12 @@ data class Message(
 )
 
 interface SocketAPI {
+
+    @Event(value = "{event}")
+    fun helloEvent(
+        @Event(value = "event") event: String
+    ): Flow<Message>
+
 
     /**
      * This is an example to show backend side
@@ -201,6 +207,7 @@ ProGuard users must manually add the options from
 ## TODO
 
 - [x] Feature multiple convertor adapter
+- [ ] Custom event
 - [ ] Convertor adapter for acknowledgement
 - [ ] Convertor adapter for acknowledgement
 - [ ] Feature convert adapter for ByteArray
@@ -222,6 +229,6 @@ License
     See the License for the specific language governing permissions and
     limitations under the License.
 
-[1]: https://search.maven.org/remote_content?g=me.adkhambek.moon&a=moon&v=LATEST
+[1]: https://search.maven.org/remote_content?g=com.adkhambek.moon&a=moon&v=LATEST
 [snap]: https://s01.oss.sonatype.org/content/repositories/snapshots/
 [proguard file]: https://github.com/MrAdkhambek/Moon/blob/main/moon/src/main/resources/META-INF/proguard/moon.pro

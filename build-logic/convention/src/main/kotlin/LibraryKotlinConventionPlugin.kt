@@ -2,7 +2,7 @@
     "UnstableApiUsage",
 )
 
-import me.adkhambek.app.Config
+import com.adkhambek.app.Config
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalogsExtension
@@ -24,8 +24,8 @@ class LibraryKotlinConventionPlugin : Plugin<Project> {
                 kotlinOptions {
                     jvmTarget = Config.javaVersion.toString()
                     freeCompilerArgs = (
-                        freeCompilerArgs + Config.freeCompilerArgs + Config.libraryCompilerArgs
-                        ).distinct()
+                            freeCompilerArgs + Config.freeCompilerArgs + Config.libraryCompilerArgs
+                            ).distinct()
                 }
             }
 

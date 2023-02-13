@@ -2,7 +2,7 @@ plugins {
     `kotlin-dsl`
 }
 
-group = "me.adkhambek.app.buildlogic"
+group = "com.adkhambek.app.buildlogic"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_11
@@ -16,7 +16,7 @@ dependencies {
 gradlePlugin {
     plugins {
         register("kotlinLibrary") {
-            id = "me.adkhambek.kotlin"
+            id = "com.adkhambek.kotlin"
             implementationClass = "LibraryKotlinConventionPlugin"
         }
     }
