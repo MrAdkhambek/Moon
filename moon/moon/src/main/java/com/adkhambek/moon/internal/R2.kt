@@ -1,4 +1,8 @@
-@file:[JvmName("R2") JvmSynthetic]
+@file:[
+    JvmName("R2")
+    JvmSynthetic
+]
+
 package com.adkhambek.moon.internal
 
 internal const val ON: String = "on"

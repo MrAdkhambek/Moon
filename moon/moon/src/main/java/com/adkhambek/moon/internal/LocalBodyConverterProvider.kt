@@ -1,4 +1,5 @@
 @file:JvmSynthetic
+
 package com.adkhambek.moon.internal
 
 import com.adkhambek.moon.convertor.EventConvertor
@@ -21,7 +22,6 @@ internal class LocalBodyConverterProvider constructor(
         type: Type,
         annotations: Array<Annotation>,
     ): EventConvertor<String, T> {
-
         val start: Int = converterFactories.indexOf(skipPast) + 1
         val end = converterFactories.size
 
@@ -55,9 +55,9 @@ internal class LocalBodyConverterProvider constructor(
         throw IllegalArgumentException(builder.toString())
     }
 
-    /////////////////////////////////////////////
+    // ///////////////////////////////////////////
     // Request
-    /////////////////////////////////////////////
+    // ///////////////////////////////////////////
 
     override fun <T> requestBodyConverter(
         type: Type,
@@ -73,7 +73,6 @@ internal class LocalBodyConverterProvider constructor(
         parameterAnnotations: Array<Annotation>,
         methodAnnotations: Array<Annotation>,
     ): EventConvertor<T, String> {
-
         val start: Int = converterFactories.indexOf(skipPast) + 1
         val end = converterFactories.size
 

@@ -3,14 +3,6 @@
 
 package com.adkhambek.moon
 
-import io.socket.client.Ack
-import io.socket.client.Socket
-import io.socket.emitter.Emitter
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.suspendCancellableCoroutine
 import com.adkhambek.moon.convertor.EventConvertor
 import com.adkhambek.moon.internal.ARGUMENT_RESULT
 import com.adkhambek.moon.internal.OFF
@@ -19,6 +11,14 @@ import com.adkhambek.moon.internal.REQUEST_WITHOUT_RESULT
 import com.adkhambek.moon.internal.RESPONSE_RESULT
 import com.adkhambek.moon.internal.STRING_WRITER_BUFFER_SIZE
 import com.adkhambek.moon.internal.ThrowX.check
+import io.socket.client.Ack
+import io.socket.client.Socket
+import io.socket.emitter.Emitter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.suspendCancellableCoroutine
 import java.io.PrintWriter
 import java.io.StringWriter
 import javax.annotation.Nonnull
@@ -79,7 +79,6 @@ internal fun flowResponse(
     logger: Logger,
     responseConvertor: EventConvertor<String, *>,
 ): Flow<Any> = callbackFlow {
-
     val listener = Emitter.Listener { arrayOfAny ->
         arrayOfAny.forEachIndexed { index, any ->
             try {

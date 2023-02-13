@@ -24,8 +24,8 @@ class LibraryKotlinConventionPlugin : Plugin<Project> {
                 kotlinOptions {
                     jvmTarget = Config.javaVersion.toString()
                     freeCompilerArgs = (
-                            freeCompilerArgs + Config.freeCompilerArgs + Config.libraryCompilerArgs
-                            ).distinct()
+                        freeCompilerArgs + Config.freeCompilerArgs + Config.libraryCompilerArgs
+                        ).distinct()
                 }
             }
 

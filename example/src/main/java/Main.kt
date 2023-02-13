@@ -1,3 +1,8 @@
+import com.adkhambek.moon.Event
+import com.adkhambek.moon.Logger
+import com.adkhambek.moon.Moon
+import com.adkhambek.moon.convertor.EventConvertor
+import com.adkhambek.moon.convertor.GsonAdapterFactory
 import io.socket.client.IO
 import io.socket.client.Socket
 import kotlinx.coroutines.asCoroutineDispatcher
@@ -5,11 +10,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import com.adkhambek.moon.Event
-import com.adkhambek.moon.Logger
-import com.adkhambek.moon.Moon
-import com.adkhambek.moon.convertor.EventConvertor
-import com.adkhambek.moon.convertor.GsonAdapterFactory
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -26,12 +26,12 @@ public fun provideOkHttpClient(): OkHttpClient = with(OkHttpClient.Builder()) {
     build()
 }
 
-//private val json = Json {
+// private val json = Json {
 //    prettyPrint = true
 //    encodeDefaults = true
-//}
+// }
 //
-//@ExperimentalSerializationApi
+// @ExperimentalSerializationApi
 private fun provideConverterFactory(): EventConvertor.Factory {
     val contentType = "application/json".toMediaType()
 //    return json.asConverterFactory(contentType)
@@ -77,7 +77,6 @@ public fun main(): Unit = runBlocking {
                 // TODO
             }
         }.launchIn(this)
-
 
     delay(1_000L)
     moon.disconnect()

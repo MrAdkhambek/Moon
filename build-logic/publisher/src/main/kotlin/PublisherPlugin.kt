@@ -2,10 +2,6 @@
     "UnstableApiUsage",
 )
 
-import java.io.File
-import java.io.FileInputStream
-import java.io.InputStreamReader
-import java.util.Properties
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalogsExtension
@@ -13,6 +9,10 @@ import org.gradle.api.publish.PublishingExtension
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
+import java.io.File
+import java.io.FileInputStream
+import java.io.InputStreamReader
+import java.util.Properties
 
 private const val SNAPSHOT = "SNAPSHOT"
 private const val USER_NAME = "mavenCentralUsername"
@@ -58,7 +58,9 @@ class PublisherPlugin : Plugin<Project> {
             InputStreamReader(FileInputStream(localProperties), Charsets.UTF_8).use { reader ->
                 properties.load(reader)
             }
-        } else error("File from not found")
+        } else {
+            error("File from not found")
+        }
 
         return properties.getProperty(key)
     }

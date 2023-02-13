@@ -1,4 +1,8 @@
-@file:[Suppress("UNUSED_PARAMETER") JvmName("ThrowX") JvmSynthetic]
+@file:[
+    Suppress("UNUSED_PARAMETER")
+    JvmName("ThrowX")
+    JvmSynthetic
+]
 
 package com.adkhambek.moon.internal
 

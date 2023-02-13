@@ -5,9 +5,9 @@ import java.lang.reflect.Type
 
 public interface BodyConverterProvider {
 
-    /////////////////////////////////////////////
+    // ///////////////////////////////////////////
     // Response
-    /////////////////////////////////////////////
+    // ///////////////////////////////////////////
     public fun <T> responseBodyConverter(
         type: Type,
         annotations: Array<Annotation>,
@@ -19,9 +19,9 @@ public interface BodyConverterProvider {
         annotations: Array<Annotation>,
     ): EventConvertor<String, T>
 
-    /////////////////////////////////////////////
+    // ///////////////////////////////////////////
     // Request
-    /////////////////////////////////////////////
+    // ///////////////////////////////////////////
     public fun <T> requestBodyConverter(
         type: Type,
         parameterAnnotations: Array<Annotation>,
@@ -35,5 +35,3 @@ public interface BodyConverterProvider {
         methodAnnotations: Array<Annotation>,
     ): EventConvertor<T, String>
 }
-
-

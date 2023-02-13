@@ -1,17 +1,21 @@
-@file:[Suppress("UNCHECKED_CAST") JvmName("Moon") JvmSynthetic]
+@file:[
+    Suppress("UNCHECKED_CAST")
+    JvmName("Moon")
+    JvmSynthetic
+]
 
 package com.adkhambek.moon
 
+import com.adkhambek.moon.convertor.EventConvertor
+import com.adkhambek.moon.internal.LocalBodyConverterProvider
+import com.adkhambek.moon.internal.SocketServiceMethodProvider
+import com.adkhambek.moon.method.ServiceMethod
+import com.adkhambek.moon.provider.ServiceMethodProvider
 import io.socket.client.Socket
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import com.adkhambek.moon.convertor.EventConvertor
-import com.adkhambek.moon.method.ServiceMethod
-import com.adkhambek.moon.internal.LocalBodyConverterProvider
-import com.adkhambek.moon.internal.SocketServiceMethodProvider
-import com.adkhambek.moon.provider.ServiceMethodProvider
 import java.lang.reflect.Method
 import java.lang.reflect.Proxy
 import java.util.concurrent.ConcurrentHashMap
@@ -52,7 +56,8 @@ public class Moon private constructor(
 
     public fun <T> create(clazz: Class<T>): T {
         val proxy = Proxy.newProxyInstance(
-            clazz.classLoader, arrayOf<Class<*>>(clazz)
+            clazz.classLoader,
+            arrayOf<Class<*>>(clazz)
         ) { _: Any?, method: Method, nullableArgs: Array<Any>? ->
             val args: Array<Any> = nullableArgs ?: arrayOf()
 
@@ -111,7 +116,6 @@ public class Moon private constructor(
             logger: Logger,
             vararg converterFactories: EventConvertor.Factory,
         ): Moon {
-
             val methodProvider: ServiceMethodProvider = SocketServiceMethodProvider(
                 converterProvider = LocalBodyConverterProvider(converterFactories.toList()),
                 socket = socket,
@@ -124,6 +128,7 @@ public class Moon private constructor(
                 serviceMethodProvider = methodProvider,
             )
         }
+
         // ///////////////////////////////////////////////////////////////////////////////////////////
         //  Companion object for extensions
         // ///////////////////////////////////////////////////////////////////////////////////////////

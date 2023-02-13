@@ -1,8 +1,8 @@
 package com.adkhambek.moon.method
 
-import com.adkhambek.moon.internal.MethodConfigs
 import com.adkhambek.moon.Utils.methodError
 import com.adkhambek.moon.convertor.EventConvertor
+import com.adkhambek.moon.internal.MethodConfigs
 import com.adkhambek.moon.provider.BodyConverterProvider
 import java.lang.reflect.Type
 
