@@ -20,6 +20,16 @@ jobs:
           distribution: 'zulu'
           java-version: 11
 
+      - name: Get release notes
+        run: |
+          echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
+          echo "$(awk '/^## ${{ github.ref_name }}/{flag=1;next}/^## /{flag=0}flag' CHANGELOG.md)" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Set version for tag
+        run: |
+          echo "ORG_GRADLE_PROJECT_VERSION_NAME=${{ github.ref_name }}" >> $GITHUB_ENV
+
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
@@ -32,5 +42,10 @@ jobs:
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SONATYPE_NEXUS_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONATYPE_NEXUS_PASSWORD }}
           ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD }}
-          ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.SIGNING_ID }}
           ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_KEY }}
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }}
+          body: ${{ env.RELEASE_NOTES }}
