@@ -31,6 +31,6 @@ jobs:
         env:
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SONATYPE_NEXUS_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONATYPE_NEXUS_PASSWORD }}
-          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SINGING_PASSWORD }}
-          ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.SINGING_ID }}
-          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SINGING_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.SIGNING_ID }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_KEY }}
