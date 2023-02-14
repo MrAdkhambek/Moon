@@ -7,7 +7,6 @@ env:
 
 jobs:
   publish:
-
     runs-on: ubuntu-latest
     if: github.repository == 'MrAdkhambek/Moon' && github.ref == 'refs/heads/main'
 
