@@ -13,7 +13,7 @@ daggerVersion = "2.44.2"
 kotlin-ksp = "1.7.0-1.0.6"
 kotlinCoroutinesVersion = "1.6.4"
 
-maven-publish = "0.22.0"
+maven-publish = "0.24.0"
 
 [plugins]
 publish = { id = "com.vanniktech.maven.publish", version.ref = "maven-publish" }
