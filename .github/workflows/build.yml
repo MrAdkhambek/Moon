@@ -7,6 +7,7 @@ env:
 
 jobs:
   publish:
+
     runs-on: ubuntu-latest
     if: github.repository == 'MrAdkhambek/Moon' && github.ref == 'refs/heads/main'
 
@@ -26,7 +27,7 @@ jobs:
           echo "$(awk '/^## ${{ github.ref_name }}/{flag=1;next}/^## /{flag=0}flag' CHANGELOG.md)" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
-      - name: Set version for tag
+      - name: Set version for clear
         run: |
           echo "ORG_GRADLE_PROJECT_VERSION_NAME=${{ github.ref_name }}" >> $GITHUB_ENV
 
