@@ -1,5 +1,5 @@
 # Change Log
 
-## 0.0.1-alpha *(2023-02-15)*
+## v0.0.1 *(2023-03-01)*
 
-- migrate to com domain
+- First release version
