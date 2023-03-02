@@ -1,11 +1,13 @@
-Moon
--------------
-[![Maven Central](https://img.shields.io/maven-central/v/com.adkhambek.moon/moon.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%com.adkhambek.moon%22)
+## Moon
+
+![Maven Central](https://img.shields.io/maven-central/v/com.adkhambek.moon/moon?logo=Kotlin)
+![GitHub](https://img.shields.io/github/license/MrAdkhambek/Moon)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/MrAdkhambek/Moon/ci.yml)
 
 A Retrofit inspired [Socket.io](https://socket.io) client for Kotlin (Android, JVM). </br>
 For WebSocket [Scarlet](https://github.com/Tinder/Scarlet) </br>
 
-> **⚠️   This library works only on Kotlin and Kotlin coroutines**
+> **⚠️ This library works only on Kotlin and Kotlin coroutines**
 
 <p align="center">
 <img src="./media/socket-moon.jpg" width="60%" alt="logo">
@@ -21,11 +23,11 @@ repositories {
 
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines_version}") // REQUIRED
-    
+
     implementation("com.adkhambek.moon:moon:${latest_version}")
-    
+
     // or KTX version for more extensions
-    implementation("com.adkhambek.moon:moon-ktx:${latest_version}") 
+    implementation("com.adkhambek.moon:moon-ktx:${latest_version}")
 }
 ```
 
@@ -35,10 +37,12 @@ Convertors
 ```groovy
 dependencies {
     implementation("com.adkhambek.moon:convertor-gson:${latest_version}")
-    implementation("com.google.code.gson:gson:${gson_version}")                             // REQUIRED if you use convertor-gson
-    
+    implementation("com.google.code.gson:gson:${gson_version}")
+    // REQUIRED if you use convertor-gson
+
     implementation("com.adkhambek.moon:convertor-kotlin-serialization:${latest_version}")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${json_version}")      // REQUIRED if you use convertor-kotlin-serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${json_version}")
+    // REQUIRED if you use convertor-kotlin-serialization
 }
 ```
 
@@ -47,7 +51,7 @@ Usage
 
 ```kotlin
 
-import kotlinx.serialization.Serializable 
+import kotlinx.serialization.Serializable
 
 @Serializable
 data class Message(
@@ -159,11 +163,12 @@ class ViewModel(
      * For listen socket state
      * @see <a href="https://github.com/MrAdkhambek/Moon/blob/f5dd034d25efcb5c066fa29ff4b7ca3d037890cf/moon/src/main/java/me/adkhambek/moon/Moon.kt#L193">Moon.Status</a>
      */
-    val state: StateFlow<Moon.Status> get() = moon.state 
+    val state: StateFlow<Moon.Status> get() = moon.state
 }
 ```
 
 ## Extensions
+
 ```kotlin
 public fun Moon.Companion.factory(): Moon.Factory
 
@@ -202,8 +207,6 @@ If you are using R8 the shrinking and obfuscation rules are included automatical
 ProGuard users must manually add the options from
 [moon.pro][proguard file].
 
-
-
 ## TODO
 
 - [x] Feature multiple convertor adapter
@@ -215,6 +218,7 @@ ProGuard users must manually add the options from
 
 License
 =======
+
     Copyright 2022 Adkhambek
 
     Licensed under the Apache License, Version 2.0 (the "License");
@@ -230,5 +234,7 @@ License
     limitations under the License.
 
 [1]: https://search.maven.org/remote_content?g=com.adkhambek.moon&a=moon&v=LATEST
+
 [snap]: https://s01.oss.sonatype.org/content/repositories/snapshots/
+
 [proguard file]: https://github.com/MrAdkhambek/Moon/blob/main/moon/src/main/resources/META-INF/proguard/moon.pro
